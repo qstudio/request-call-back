@@ -20,7 +20,7 @@ function wpcallback_register_scripts() {
 	if (!is_admin()) {
 		if(wpcallback_get_option('colorbox') == 'enabled' && wpcallback_get_option('lightbox') == 'enabled') {
 			wp_register_script('wpcolorbox_js', plugins_url('colorbox/jquery.colorbox-min.js', __FILE__), array( 'jquery' ));
-			wp_enqueue_script('wpcolorbox_js');
+			wp_enqueue_script('wpcolorbox_jswp');
 		}
 		wp_register_script('wpcallback_js', plugins_url('js/request-callback.js', __FILE__), array( 'jquery' ));
 		wp_enqueue_script('wpcallback_js');
@@ -249,7 +249,7 @@ function wpcallback_action() {
 				$message = "A call back request has been sent with the following details:\n\nName: " . $name . "\nTelephone: " . $telephone . $extra_fields . "\n\n\nSent from " . get_site_url() . " via the Request Call Back plugin.";
 
 				/* Send email */
-				if(wp_mail($admin_email, $subject, $message)) {
+				if(mail($admin_email, $subject, $message)) {
 					header("Location:" . wpcallback_get_target());
 					exit;
 				}
